@@ -15,7 +15,7 @@ with open('requirements.txt') as f:
     REQUIREMENTS = f.readlines()
 
 setuptools.setup(
-    name="np_numpy",
+    name="np",
     version='0.1',
     description="np = numpy++: numpy with added convenience functionality",
     url='https://github.com/k7hoven/np',
