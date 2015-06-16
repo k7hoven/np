@@ -1,9 +1,6 @@
 np -- create numpy arrays as ``np[1,3,5]``, and more
 ====================================================
 
-.. image:: https://img.shields.io/pypi/v/np.svg
-    :target: https://pypi.python.org/pypi/np
-
 ``np``  = ``numpy`` + handy tools
 
 For the numerical Python package ``numpy`` itself, see http://www.numpy.org/.
