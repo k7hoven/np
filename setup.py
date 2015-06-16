@@ -5,10 +5,10 @@
 import setuptools
 import os
 
-with open('README.md') as f:
+with open('README.rst') as f:
     README = f.read()
 
-with open('CHANGES.md') as f:
+with open('CHANGES.rst') as f:
     CHANGES = f.read()
     
 with open('requirements.txt') as f:
@@ -29,10 +29,7 @@ setuptools.setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3',
     ],
 
     install_requires = REQUIREMENTS,
