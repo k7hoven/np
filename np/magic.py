@@ -31,7 +31,7 @@ class npmodule(types.ModuleType):
         if isinstance(arg, list):
             return array((arg,), dtype = self.dtype)
         if isinstance(arg, slice):
-            rangeargs = (arg.start, 
+            rangeargs = (arg.start if arg.start is not None else 0, 
                          arg.stop, 
                          arg.step if arg.step is not None else 1)
             return arange(*rangeargs, dtype = self.dtype)
