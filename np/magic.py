@@ -15,8 +15,25 @@ class npmodule(types.ModuleType):
         if dtype is None:
             self.__name__ = numpy.__name__ # to initialize self.__dict__
             self.__dict__.update(numpy.__dict__)
-            self.f64 = npmodule(dtype = 'float64')
-            self.i8 = npmodule(dtype = 'int8')
+            self.f = npmodule(dtype = numpy.float_)
+            self.f64 = npmodule(dtype = numpy.float64)        
+            self.f32 = npmodule(dtype = numpy.float32)            
+            
+            self.i = npmodule(dtype = numpy.int_)
+            self.i64 = npmodule(dtype = numpy.int64)
+            self.i32 = npmodule(dtype = numpy.int32)
+            self.i16 = npmodule(dtype = numpy.int16)
+            self.i8 = npmodule(dtype = numpy.int8)
+
+            self.ui64 = npmodule(dtype = numpy.uint64)
+            self.ui32 = npmodule(dtype = numpy.uint32)
+            self.ui16 = npmodule(dtype = numpy.uint16)
+            self.ui8 = npmodule(dtype = numpy.uint8)
+            
+            self.c = npmodule(dtype = numpy.complex_)
+            self.c128 = npmodule(dtype = numpy.complex128)
+            self.c64 = npmodule(dtype = numpy.complex64)
+                        
             self.numpy = numpy
             sys.modules[numpy.__name__] = self
             sys.modules['np'] = self

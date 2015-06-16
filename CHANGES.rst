@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.2 (2015-06-17)
+------------------
+
+ - Improved experimental dtype shortcuts: np.f[1,2], np.i32[1,2], etc.
+
 0.1.1 (2015-06-17)
 ------------------
 
