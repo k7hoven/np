@@ -1,0 +1,13 @@
+Changelog
+=========
+
+0.1.0 (2015-06-17)
+------------------
+
+ - First distributable version
+ - Easy arrays such as np[[1,2],[3,4]]
+ - Shortcut for np.asanyarray(obj): np(obj)
+ - Experimental dtype shortcuts: np.f64[[1,2],[3,4]]
+ 
+
+
