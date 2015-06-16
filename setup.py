@@ -5,8 +5,6 @@
 import setuptools
 import os
 
-from np import __version__
-
 with open('README.md') as f:
     README = f.read()
 
@@ -17,9 +15,9 @@ with open('requirements.txt') as f:
     REQUIREMENTS = f.readlines()
 
 setuptools.setup(
-    name="np=numpy++",
-    version=__version__,
-    description="np is numpy with added convenience functionality",
+    name="np_numpy",
+    version='0.1.0',
+    description="np = numpy++: numpy with added convenience functionality",
     url='https://github.com/k7hoven/np',
     author='Koos Zevenhoven',
     author_email='koos.zevenhoven@aalto.fi',
