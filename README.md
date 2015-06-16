@@ -1,6 +1,6 @@
 np -- create numpy arrays as `np[1,3,5]`, and more
 ======
-`np` = `numpy + `handy tools
+`np` = `numpy` + handy tools
 
 For the numerical Python package `numpy` itself, see [here](http://www.numpy.org/).
 
@@ -52,7 +52,8 @@ The most important feature of `np` is to make the creation of arrays less verbos
 >>> column_vector = np[[1, 2, 3]].T
 ```
 
-As you can see from the above example, you can create numpy arrays by subscripting the `np` module. Since most people would have numpy imported as `np` anyway, this requires no additional names to clutter the namespace.  
+As you can see from the above example, you can create numpy arrays by subscripting the `np` module. Since most people would have numpy imported as `np` anyway, this requires no additional names to clutter the namespace. Also, the syntax `np[1,2,3]` resembles the syntax for `bytes` literals, `b"asd"`. 
+
 The `np` package also provides a convenient way of ensuring something is a numpy array, that is, a shortcut to `numpy.asanyarray()`:
 
 ```
