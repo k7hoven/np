@@ -2,9 +2,7 @@ np -- create numpy arrays as ``np[1,3,5]``, and more
 ==================================================
 ``np``  = ``numpy`` + handy tools
 
-For the numerical Python package ``numpy`` itself, see here_.
-
-.. _this: http://www.python.org/
+For the numerical Python package ``numpy`` itself, see http://www.numpy.org/.
 
 The idea of ``np`` is to provide a way of creating numpy arrays with a compact syntax and without an explicit function call. Making the module name ``np`` subscriptable, while still keeping it essentially an alias for numpy, does this in a clean way.
 
