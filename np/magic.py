@@ -38,24 +38,24 @@ class npmodule(types.ModuleType):
             sys.modules[numpy.__name__] = self
             sys.modules['np'] = self
         
-        self.dtype = dtype
+        self.__dtype = dtype
 
     def __getitem__(self, arg):
         if isinstance(arg, tuple):
             # Assume the tuple was not created by the user,
             # i.e. multiple arguments to subscript [arg1, ...].
-            return array(arg, dtype = self.dtype)
+            return array(arg, dtype = self.__dtype)
         if isinstance(arg, list):
-            return array((arg,), dtype = self.dtype)
+            return array((arg,), dtype = self.__dtype)
         if isinstance(arg, slice):
             rangeargs = (arg.start if arg.start is not None else 0, 
                          arg.stop, 
                          arg.step if arg.step is not None else 1)
-            return arange(*rangeargs, dtype = self.dtype)
-        return array((arg,), dtype = self.dtype)
+            return arange(*rangeargs, dtype = self.__dtype)
+        return array((arg,), dtype = self.__dtype)
   
     def __call__(self, *args, **kwargs):
-        return asanyarray(*args, dtype = self.dtype, **kwargs)
+        return asanyarray(*args, dtype = self.__dtype, **kwargs)
 
 npmodule()
 
