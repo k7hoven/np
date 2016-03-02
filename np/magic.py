@@ -7,7 +7,12 @@ Created on Fri May 22 03:05:47 2015
 
 import types
 import sys
-import numpy
+try:
+    import numpy
+except ImportError as e:
+    raise RuntimeError("The numpy package must be installed to use the np extensions. \n"
+                       "Please install numpy using your package manager such as conda or pip.")
+    
 from numpy import array, arange, asanyarray
 
 np_quick_types = {
