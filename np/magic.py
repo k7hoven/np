@@ -10,11 +10,32 @@ import sys
 import numpy
 from numpy import array, arange, asanyarray
 
+np_quick_types = {
+    'f': numpy.float_,
+    'f64': numpy.float64,
+    'f32': numpy.float32,
+    'i': numpy.int_,
+    'i64': numpy.int64,
+    'i32': numpy.int32,
+    'i16': numpy.int16,
+    'i8': numpy.int8,
+    'ui64': numpy.uint64,
+    'ui32': numpy.uint32,
+    'ui16': numpy.uint16,
+    'ui8': numpy.uint8,
+    'c': numpy.complex_,
+    'c128': numpy.complex128,
+    'c64': numpy.complex64 
+}
+                  
+                
+
 class npmodule(types.ModuleType):
     def __init__(self, dtype = None):
         if dtype is None:
             self.__name__ = numpy.__name__ # to initialize self.__dict__
             self.__dict__.update(numpy.__dict__)
+            
             self.f = npmodule(dtype = numpy.float_)
             self.f64 = npmodule(dtype = numpy.float64)        
             self.f32 = npmodule(dtype = numpy.float32)            
@@ -24,7 +45,7 @@ class npmodule(types.ModuleType):
             self.i32 = npmodule(dtype = numpy.int32)
             self.i16 = npmodule(dtype = numpy.int16)
             self.i8 = npmodule(dtype = numpy.int8)
-
+            
             self.ui64 = npmodule(dtype = numpy.uint64)
             self.ui32 = npmodule(dtype = numpy.uint32)
             self.ui16 = npmodule(dtype = numpy.uint16)
@@ -33,6 +54,8 @@ class npmodule(types.ModuleType):
             self.c = npmodule(dtype = numpy.complex_)
             self.c128 = npmodule(dtype = numpy.complex128)
             self.c64 = npmodule(dtype = numpy.complex64)
+            
+            self.np_quick_types = np_quick_types            
                         
             self.numpy = numpy
             sys.modules[numpy.__name__] = self
