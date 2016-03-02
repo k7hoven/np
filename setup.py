@@ -21,7 +21,7 @@ setuptools.setup(
     url='https://github.com/k7hoven/np',
     author='Koos Zevenhoven',
     author_email='koos.zevenhoven@aalto.fi',
-    packages=setuptools.find_packages(),
+    packages=setuptools.find_packages(exclude = ('tests',)),
     long_description=(README + '\n' + CHANGES),
     license='BSD',
     classifiers=[
