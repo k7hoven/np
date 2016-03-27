@@ -74,45 +74,43 @@ class NPQuickTypeShortcut(object):
                 
 
 class npmodule(types.ModuleType):
-    def __init__(self, dtype = None):
-        self._repr = repr(numpy).replace("<module", "<np-enhanced module")
-        if dtype is None:
-            self.__name__ = numpy.__name__ # to initialize self.__dict__
-            self.__dict__.update(numpy.__dict__)
-            
-            for shortcut in np_quick_types:
-                setattr(self, shortcut, NPQuickTypeShortcut(shortcut))
-            self.np_quick_types = np_quick_types            
-                        
-            self.numpy = numpy
-            self.np = self
-            sys.modules[numpy.__name__] = self
-            sys.modules['np'] = self
+    def __init__(self):
+        self.__name__ = numpy.__name__ # to initialize self.__dict__
+        self.__dict__.update(numpy.__dict__)
         
-        self.__dtype = dtype
+        sys.modules[numpy.__name__] = self
+        sys.modules['np'] = self
 
     def __getitem__(self, arg):
         if isinstance(arg, tuple):
             # Assume the tuple was not created by the user,
             # i.e. multiple arguments to subscript [arg1, ...].
-            return array(arg, dtype = self.__dtype)
+            return array(arg)
         if isinstance(arg, list):
-            return array((arg,), dtype = self.__dtype)
+            return array((arg,))
         if isinstance(arg, slice):
             rangeargs = (arg.start if arg.start is not None else 0, 
                          arg.stop, 
                          arg.step if arg.step is not None else 1)
-            return arange(*rangeargs, dtype = self.__dtype)
-        return array((arg,), dtype = self.__dtype)
+            return arange(*rangeargs)
+        return array((arg,))
   
     def __call__(self, *args, **kwargs):
-        return asanyarray(*args, dtype = self.__dtype, **kwargs)
+        return asanyarray(*args, **kwargs)
         
     def __repr__(self):
         return self._repr
 
-npmodule()
+_repr = repr(numpy).replace("<module", "<np-enhanced module")
 
+np = npmodule()
 
-  
+for shortcut in np_quick_types:
+    setattr(np, shortcut, NPQuickTypeShortcut(shortcut))
+np.np_quick_types = np_quick_types            
+np.numpy = numpy
+np.np = np
+np._repr = _repr
+
+sys.modules['np'] = np  
     
