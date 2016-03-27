@@ -17,19 +17,32 @@ from numpy import array, arange, asanyarray
 
 np_quick_types = {
     'f': numpy.float_,
+    'f8': numpy.float64,
     'f64': numpy.float64,
+    'f4': numpy.float32,
     'f32': numpy.float32,
+    'f2': numpy.float16,
     'i': numpy.int_,
+#    'i8': numpy.int64,  allow this in the future
     'i64': numpy.int64,
+    'i4': numpy.int32,
     'i32': numpy.int32,
+    'i2': numpy.int16,
     'i16': numpy.int16,
+    'i1': numpy.int8,
 #    'i8': numpy.int8,   not ok; this might mean 8*8 == 64 bits
+    'u8': numpy.uint64,
     'ui64': numpy.uint64,
+    'u4': numpy.uint32,
     'ui32': numpy.uint32,
+    'u2': numpy.uint16,
     'ui16': numpy.uint16,
+    'u1': numpy.uint8,
 #    'ui8': numpy.uint8, not ok; this might mean 8*8 == 64 bits 
     'c': numpy.complex_,
+    'c16': numpy.complex128,
     'c128': numpy.complex128,
+    'c8': numpy.complex64,
     'c64': numpy.complex64 
 }
                   
