@@ -23,11 +23,11 @@ np_quick_types = {
     'i64': numpy.int64,
     'i32': numpy.int32,
     'i16': numpy.int16,
-    'i8': numpy.int8,
+#    'i8': numpy.int8,   not ok; this might mean 8*8 == 64 bits
     'ui64': numpy.uint64,
     'ui32': numpy.uint32,
     'ui16': numpy.uint16,
-    'ui8': numpy.uint8,
+#    'ui8': numpy.uint8, not ok; this might mean 8*8 == 64 bits 
     'c': numpy.complex_,
     'c128': numpy.complex128,
     'c64': numpy.complex64 
@@ -49,12 +49,12 @@ class npmodule(types.ModuleType):
             self.i64 = npmodule(dtype = numpy.int64)
             self.i32 = npmodule(dtype = numpy.int32)
             self.i16 = npmodule(dtype = numpy.int16)
-            self.i8 = npmodule(dtype = numpy.int8)
+            #self.i8 = npmodule(dtype = numpy.int8)
             
             self.ui64 = npmodule(dtype = numpy.uint64)
             self.ui32 = npmodule(dtype = numpy.uint32)
             self.ui16 = npmodule(dtype = numpy.uint16)
-            self.ui8 = npmodule(dtype = numpy.uint8)
+            #self.ui8 = npmodule(dtype = numpy.uint8)
             
             self.c = npmodule(dtype = numpy.complex_)
             self.c128 = npmodule(dtype = numpy.complex128)
