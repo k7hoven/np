@@ -56,10 +56,13 @@ class NPQuickTypeShortcut(object):
     def __call__(self, *args, **kwargs):
         return asanyarray(*args, dtype = self.dtype, **kwargs)
     
+    def __repr__(self):
+        return "<np quick array creator for dtype %s>" % repr(self.dtype.__name__)
                 
 
 class npmodule(types.ModuleType):
     def __init__(self, dtype = None):
+        self._repr = repr(numpy).replace("<module", "<np-enhanced module")
         if dtype is None:
             self.__name__ = numpy.__name__ # to initialize self.__dict__
             self.__dict__.update(numpy.__dict__)
@@ -91,6 +94,9 @@ class npmodule(types.ModuleType):
   
     def __call__(self, *args, **kwargs):
         return asanyarray(*args, dtype = self.__dtype, **kwargs)
+        
+    def __repr__(self):
+        return self._repr
 
 npmodule()
 
