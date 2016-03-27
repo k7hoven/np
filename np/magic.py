@@ -63,6 +63,7 @@ class npmodule(types.ModuleType):
             self.np_quick_types = np_quick_types            
                         
             self.numpy = numpy
+            self.np = self
             sys.modules[numpy.__name__] = self
             sys.modules['np'] = self
         
