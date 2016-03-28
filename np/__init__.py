@@ -6,5 +6,4 @@
 # way to do this in Python.
 
 import np.magic
-del np.magic # clean up: no need for the magic module after this
-
+#del np.magic # clean up: no need for the magic module after this

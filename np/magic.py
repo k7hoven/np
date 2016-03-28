@@ -7,15 +7,20 @@ Created on Mon Mar 28 00:54:30 2016
 import np.quickarrays as quickarrays
 import sys
 
-np = quickarrays.npmodule()
+if sys.version_info < (3,5,0):
+    np = quickarrays.npmodule()
+    
+    np.numpy = quickarrays.numpy
+    np.np = np
+    
+    sys.modules['numpy'] = np    
+else:
+    np = quickarrays.numpy
+    np.__class__ = quickarrays.npmodule
 
 for shortcut in quickarrays.np_quick_types:
     setattr(np, shortcut, quickarrays.NPQuickTypeShortcut(shortcut))
+np._repr = quickarrays._repr    
 np.np_quick_types = quickarrays.np_quick_types            
-np.numpy = quickarrays.numpy
-np.np = np
-np._repr = quickarrays._repr
 
 sys.modules['np'] = np  
-sys.modules['numpy'] = np    
-
