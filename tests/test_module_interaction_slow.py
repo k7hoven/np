@@ -8,15 +8,6 @@ import unittest
 import sys
 import subprocess
 
-#def cleanup():
-#    for m in list(sys.modules):
-#        if "numpy" in m:
-#            del sys.modules[m]
-#    if "np" in sys.modules:
-#        del sys.modules["np"]
-#    if "np.magic" in sys.modules:
-#        del sys.modules["np.magic"]
-
 def run_in_subprocess(code):
     PIPE = subprocess.PIPE
     p = subprocess.Popen([sys.executable, '-c', code], stdout=PIPE, stderr=PIPE)
@@ -51,13 +42,16 @@ class NumpyTestComparison(unittest.TestCase):
     def test_clean_numpy_vs_after_np(self):
         res = run_suite("import numpy; import np; numpy.test()")
         self.assertSameTestResults(res, self.numpytest)
-        
+    
+    @unittest.skipIf(sys.version_info >= (3,5,0),
+                     "No need to test np and numpy separately when np is numpy")    
     def test_clean_numpy_vs_dirty_np(self):
         res = run_suite("import numpy; import np; np.test()")
         self.assertSameTestResults(res, self.numpytest)
         
 class ModuleIdentity(unittest.TestCase):
-        
+    @unittest.skipIf(sys.version_info < (3,5,0), 
+                     "numpy imported before np is a different object in pre-3.5 Python.")
     def test_numpy_is_np(self):
         res = run_in_subprocess("import numpy; import np; print(numpy is np)")
         self.assertEqual(res[0].strip(), b"True")
@@ -65,8 +59,6 @@ class ModuleIdentity(unittest.TestCase):
     def test_np_is_numpy(self):
         res = run_in_subprocess("import np; import numpy; print(np is numpy)")
         self.assertEqual(res[0].strip(), b"True")
-        
-        
         
 if __name__ == "__main__":
     unittest.main()
