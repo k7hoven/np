@@ -1,6 +1,25 @@
 Changelog
 =========
 
+0.2.0 (2016-03-29)
+------------------
+
+- Quick types are now np.i, np.f, np.u, np.c, or with the number of /bytes/ per
+  value appended: np.i4 -> int32, np.u2 -> uint16, np.c16 -> complex128, ...
+  (still somewhat experimental)
+- Removed the old np.i8 and np.ui8 which represented 8-bit types, which
+  was inconsistent with short numpy dtype names which correspond to numbers of
+  bytes. The rest of the bit-based shortcuts are deprecated and will be removed
+  later.
+- Handle Python versions >=3.5 better; now even previously imported plain numpy
+  module objects become the exact same object as np. 
+- Tests for all np functionality
+- Ridiculously slow tests that runs the numpy test suite several times to
+  make sure that np does not affect numpy functionality.
+- Remove numpy from requirements and give a meaningful error instead if numpy
+  is missing (i.e. install it using your package manager like conda or pip)
+- Better reprs for subscriptable array creator objects and the np/numpy module.
+
 0.1.4 (2016-01-26)
 ------------------
 

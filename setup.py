@@ -16,7 +16,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="np",
-    version='0.1.4',
+    version='0.2.0',
     description="np = numpy++: numpy with added convenience functionality",
     url='https://github.com/k7hoven/np',
     author='Koos Zevenhoven',
@@ -25,7 +25,7 @@ setuptools.setup(
     long_description=(README + '\n' + CHANGES),
     license='BSD',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2.7',
