@@ -7,7 +7,7 @@ For the numerical Python package ``numpy`` itself, see http://www.numpy.org/.
 
 The idea of ``np`` is to provide a way of creating numpy arrays with a compact syntax and without an explicit function call. Making the module name ``np`` subscriptable, while still keeping it essentially an alias for numpy, does this in a clean way.
 
-Any feedback is very welcome: `koos.zevenhoven@aalto.fi`.
+Any feedback is very welcome: ``koos.zevenhoven@aalto.fi``.
 
 Getting Started
 ===============
@@ -39,7 +39,7 @@ or directly from the source code:
 Basic Usage
 ===========
 
-Even before the `np` tool, a popular style of using ``numpy`` has been to import it as ``np``:
+Even before the ``np`` tool, a popular style of using ``numpy`` has been to import it as ``np``:
 
 .. code-block:: python
 
@@ -82,3 +82,4 @@ As an experimental feature, there are also shortcuts for giving the arrays a spe
     array([1, 2, 3], dtype=uint32)
     >>> np.c[1, 2, 3]
     array([ 1.+0.j,  2.+0.j,  3.+0.j])
+
