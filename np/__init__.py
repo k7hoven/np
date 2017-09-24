@@ -3,7 +3,7 @@
 
 # Needs to do some magic to import numpy and replace it with a monkey-patched
 # version implementing __getitem__ etc. This seems to be close to the cleanest
-# way to do this in Python.
+# way to do this in Python. This now works best with Python >=3.5.
 
-import np.magic
-#del np.magic # clean up: no need for the magic module after this
+import n
+p.magic

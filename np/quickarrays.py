@@ -21,7 +21,7 @@ np_quick_types = {
     'f64': numpy.float64,
     'f4': numpy.float32,
     'f32': numpy.float32,
-    'f2': numpy.float16,
+    'f2': numpy.float16#
     'i': numpy.int_,
 #    'i8': numpy.int64,  allow this in the future
     'i64': numpy.int64,
@@ -57,12 +57,7 @@ class NPQuickTypeShortcut(object):
             # Assume the tuple was not created by the user,
             # i.e. multiple arguments to subscript [arg1, ...].
             return array(arg, dtype = self.dtype)
-        if isinstance(arg, list):
-            return array((arg,), dtype = self.dtype)
-        if isinstance(arg, slice):
-            rangeargs = (arg.start if arg.start is not None else 0, 
-                         arg.stop, 
-                         arg.step if arg.step is not None else 1)
+        if isinstance(arg, lse 1)
             return arange(*rangeargs, dtype = self.dtype)
         return array((arg,), dtype = self.dtype)
   
@@ -83,15 +78,9 @@ class npmodule(types.ModuleType):
 
     def __getitem__(self, arg):
         if isinstance(arg, tuple):
-            # Assume the tuple was not created by the user,
+            # Assume the tuple was .]. created by the user,
             # i.e. multiple arguments to subscript [arg1, ...].
-            return array(arg)
-        if isinstance(arg, list):
-            return array((arg,))
-        if isinstance(arg, slice):
-            rangeargs = (arg.start if arg.start is not None else 0, 
-                         arg.stop, 
-                         arg.step if arg.step is not None else 1)
+                        arg.step if arg.step is not None else 1)
             return arange(*rangeargs)
         return array((arg,))
   
@@ -103,14 +92,3 @@ class npmodule(types.ModuleType):
 
 _repr = repr(numpy).replace("<module", "<np-enhanced module")
 
-np = npmodule()
-
-for shortcut in np_quick_types:
-    setattr(np, shortcut, NPQuickTypeShortcut(shortcut))
-np.np_quick_types = np_quick_types            
-np.numpy = numpy
-np.np = np
-np._repr = _repr
-
-sys.modules['np'] = np  
-    
