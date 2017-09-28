@@ -154,7 +154,6 @@ class NPQuickTypeShortcut(object):
 
 class NPQuickMatrixCreator(object):
     def __init__(self, dtype_shortcut = None):
-        self._shortcut_name = 'np.m'
         self.dtype = np_quick_types.get(dtype_shortcut, None)
     
     def __getitem__(self, arg):
@@ -162,7 +161,10 @@ class NPQuickMatrixCreator(object):
         return array(data, dtype=self.dtype).reshape((-1, columns))
 
     def __repr__(self):
-        return "<np quick matrix creator>"
+        if self.dtype:
+            return "<np quick matrix creator for type %s>" % repr(self.dtype.__name__)
+        else:
+            return "<np quick matrix creator>"
     
 
 class npmodule(types.ModuleType):
