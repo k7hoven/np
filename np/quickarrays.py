@@ -41,9 +41,9 @@ np_quick_types = {
 #    'ui8': numpy.uint8, not ok; this might mean 8*8 == 64 bits 
     'c': numpy.complex_,
     'c16': numpy.complex128,
-#    'c128': numpy.complex128,
+#    'c128': numpy.complex128,  leave out for consistency
     'c8': numpy.complex64,
-#    'c64': numpy.complex64 
+#    'c64': numpy.complex64     leave out for consistency
 }
 
 def all_scalar(objs):
@@ -72,8 +72,71 @@ def getitem_process(arg):
     if any(type(obj) is tuple for obj in arg):
         raise TypeError("use np.m or lists [...] instead of tuples (...)")
     if not shape_ok(arg):
-        raise ValueError("cannot construct n-dimensional array")
+        raise SyntaxError("cannot construct n-dimensional array")
     return arg
+
+class CheckEqual(object):
+    def new(self, new_value):
+        try:
+            return self.value == new_value
+        except AttributeError:
+            self.value = new_value
+            return True
+
+def getitem_process_matrix(arg):
+    if type(arg) is slice:
+        raise SyntaxError("to create a column vector, use np.m[1, 2, 3].T")
+    count = 0
+    columns_check = CheckEqual()
+    style_check = CheckEqual()
+    elements = []
+    for val in arg:
+        if type(val) is slice:
+            # always an element in 'start'
+            if not isscalar(val.start):
+                if val.start is None:
+                    raise SyntaxError("missing element(s) or misplaced punctuation")
+                tname = type(val.start).__name__
+                raise ValueError("'{}' object is not scalar".format(tname))
+            
+            elements.append(val.start)
+            count += 1
+
+            if not columns_check.new(count):
+                raise SyntaxError("matrix row lengths "
+                                  "{} and {} do not match".format(columns_check.value, 
+                                                                  count))
+            count = 0
+
+            if val.step is val.stop is None:
+                raise SyntaxError("missing element(s) or misplaced punctuation")
+
+            # look for element in 'stop' and 'step'
+            if val.step is None:
+                if not style_check.new('single'):
+                    raise SyntaxError("inconsistent use of colons in matrix")
+                val = val.stop
+            elif val.stop is None:
+                if not style_check.new('double'):
+                    raise SyntaxError("inconsistent use of colons in matrix")
+                val = val.step
+            else:
+                raise SyntaxError("missing element(s) or misplaced punctuation")
+
+            # continue just as with a plain value
+ 
+        if not isscalar(val):
+            tname = type(val).__name__
+            raise ValueError("'{}' object is not scalar".format(tname))
+            
+        elements.append(val)
+        count += 1
+    
+    if not columns_check.new(count):
+        raise SyntaxError("matrix row lengths "
+                          "{} and {} do not match".format(columns_check.value,
+                                                          count))
+    return elements, columns_check.value
     
 class NPQuickTypeShortcut(object):
     def __init__(self, shortcut):
@@ -88,7 +151,20 @@ class NPQuickTypeShortcut(object):
     
     def __repr__(self):
         return "<np quick array creator for dtype %s>" % repr(self.dtype.__name__)
-        
+
+class NPQuickMatrixCreator(object):
+    def __init__(self, dtype_shortcut = None):
+        self._shortcut_name = 'np.m'
+        self.dtype = np_quick_types.get(dtype_shortcut, None)
+    
+    def __getitem__(self, arg):
+        data, columns = getitem_process_matrix(arg)
+        return array(data, dtype=self.dtype).reshape((-1, columns))
+
+    def __repr__(self):
+        return "<np quick matrix creator>"
+    
+
 class npmodule(types.ModuleType):
     def __init__(self):
         self.__name__ = numpy.__name__ # to initialize self.__dict__
