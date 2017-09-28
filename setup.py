@@ -16,7 +16,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="np",
-    version='0.2.0',
+    version='1.0.0',
     description="np = numpy++: numpy with added convenience functionality",
     url='https://github.com/k7hoven/np',
     author='Koos Zevenhoven',
