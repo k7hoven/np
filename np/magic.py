@@ -20,6 +20,7 @@ else:
 
 for shortcut in quickarrays.np_quick_types:
     setattr(np, shortcut, quickarrays.NPQuickTypeShortcut(shortcut))
+np.m = quickarrays.NPQuickMatrixCreator()
 np._repr = quickarrays._repr    
 np.np_quick_types = quickarrays.np_quick_types            
 
