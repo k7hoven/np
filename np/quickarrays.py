@@ -13,7 +13,7 @@ except ImportError as e:
     raise RuntimeError("The numpy package must be installed to use the np extensions. \n"
                        "Please install numpy using your package manager such as conda or pip.")
     
-from numpy import array, arange, asanyarray
+from numpy import array, asarray, asanyarray, isscalar, shape
 
 np_quick_types = {
     'f': numpy.float_,
@@ -21,7 +21,7 @@ np_quick_types = {
     'f64': numpy.float64,
     'f4': numpy.float32,
     'f32': numpy.float32,
-    'f2': numpy.float16#
+    'f2': numpy.float16,
     'i': numpy.int_,
 #    'i8': numpy.int64,  allow this in the future
     'i64': numpy.int64,
@@ -45,29 +45,50 @@ np_quick_types = {
     'c8': numpy.complex64,
     'c64': numpy.complex64 
 }
-                  
 
+def all_scalar(objs):
+    return all(isscalar(obj) for obj in objs)
+
+def all_equal_len(objs):
+    lengths = [len(obj) for obj in objs]
+    return len(set(lengths)) <= 1
+
+def all_equal_shape(objs):
+    return len(set(shape(obj) for obj in objs)) <= 1
+
+def shape_ok(objs):
+    if all_scalar(objs):
+        return True
+    if not all_equal_shape(objs):
+        return False
+    return shape_ok([obj for cont in objs
+                             for obj in cont])
+
+def getitem_process(arg):
+    if not isinstance(arg, tuple):
+        # We know that the user did not use
+        # multiple arguments to subscript [arg1, ...].
+        arg = (arg,)
+    if any(type(obj) is tuple for obj in arg):
+        raise TypeError("use np.m or lists [...] instead of tuples (...)")
+    if not shape_ok(arg):
+        raise ValueError("cannot construct n-dimensional array")
+    return arg
+    
 class NPQuickTypeShortcut(object):
     def __init__(self, shortcut):
         self.dtype = np_quick_types[shortcut]
         self._shortcut_name = 'np.' + shortcut
         
     def __getitem__(self, arg):
-        if isinstance(arg, tuple):
-            # Assume the tuple was not created by the user,
-            # i.e. multiple arguments to subscript [arg1, ...].
-            return array(arg, dtype = self.dtype)
-        if isinstance(arg, lse 1)
-            return arange(*rangeargs, dtype = self.dtype)
-        return array((arg,), dtype = self.dtype)
+        return array(getitem_process(arg), dtype = self.dtype)
   
     def __call__(self, *args, **kwargs):
-        return asanyarray(*args, dtype = self.dtype, **kwargs)
+        return asarray(*args, dtype = self.dtype, **kwargs)
     
     def __repr__(self):
         return "<np quick array creator for dtype %s>" % repr(self.dtype.__name__)
-                
-
+        
 class npmodule(types.ModuleType):
     def __init__(self):
         self.__name__ = numpy.__name__ # to initialize self.__dict__
@@ -77,18 +98,12 @@ class npmodule(types.ModuleType):
         sys.modules['np'] = self
 
     def __getitem__(self, arg):
-        if isinstance(arg, tuple):
-            # Assume the tuple was .]. created by the user,
-            # i.e. multiple arguments to subscript [arg1, ...].
-                        arg.step if arg.step is not None else 1)
-            return arange(*rangeargs)
-        return array((arg,))
+        return array(getitem_process(arg))
   
     def __call__(self, *args, **kwargs):
-        return asanyarray(*args, **kwargs)
+        return asarray(*args, **kwargs)
         
     def __repr__(self):
         return self._repr
 
 _repr = repr(numpy).replace("<module", "<np-enhanced module")
-
