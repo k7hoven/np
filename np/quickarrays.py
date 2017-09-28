@@ -23,7 +23,7 @@ np_quick_types = {
     'f32': numpy.float32,
     'f2': numpy.float16,
     'i': numpy.int_,
-#    'i8': numpy.int64,  allow this in the future
+#    'i8': numpy.int64,  allow this in the future?
     'i64': numpy.int64,
     'i4': numpy.int32,
     'i32': numpy.int32,
@@ -41,9 +41,9 @@ np_quick_types = {
 #    'ui8': numpy.uint8, not ok; this might mean 8*8 == 64 bits 
     'c': numpy.complex_,
     'c16': numpy.complex128,
-    'c128': numpy.complex128,
+#    'c128': numpy.complex128,
     'c8': numpy.complex64,
-    'c64': numpy.complex64 
+#    'c64': numpy.complex64 
 }
 
 def all_scalar(objs):
