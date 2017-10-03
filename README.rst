@@ -3,6 +3,23 @@ np -- create numpy arrays as ``np[1,3,5]``, and more
 
 ``np``  = ``numpy`` + handy tools
 
+It's very easy::
+
+    import np
+
+
+* 1D array:: 
+  
+    np[1, 3, 5]
+
+
+* 2D matrix:: 
+
+    np[1, 2, 3: 
+      :4, 5, 6:
+      :7, 8, 9]
+
+
 For the numerical Python package ``numpy`` itself, see http://www.numpy.org/.
 
 The idea of ``np`` is to provide a way of creating numpy arrays with a compact syntax and without an explicit function call. Making the module name ``np`` subscriptable, while still keeping it essentially an alias for numpy, does this in a clean way.
@@ -16,12 +33,12 @@ Requirements
 ------------
 
 * Works best with Python 3.5+ (Tested also with 3.4 and 2.7)
-* numpy (you should install this using your python package manager like `conda` or `pip`)
+* numpy (you should install this using your python package manager like ``conda`` or ``pip``)
 
 Installation
 ------------
 
-np can be installed with pip:
+``np`` can be installed with ``pip`` or ``pip3``:
 
 .. code-block:: bash
 
@@ -54,10 +71,18 @@ The most important feature of ``np`` is to make the creation of arrays less verb
     >>> import np
     >>> my_array = np[3, 4, 5]
     >>> my_2d_array = np[[1, 2], [3, 4]]
+    >>> my_matrix = np.m[1, 2: 3, 4]
+    >>> my_matrix2 = np.m[1, 2, 3:
+    ...                  :4, 5, 6:
+    ...                  :7, 8, 9]
+    >>> my_row_vector = np.m[1, 2, 3]
 
-As you can see from the above example, you can create numpy arrays by subscripting the `np` module. Since most people would have numpy imported as ``np`` anyway, this requires no additional names to clutter the namespace. Also, the syntax ``np[1,2,3]`` resembles the syntax for ``bytes`` literals, ``b"asd"``. 
 
-The `np` package also provides a convenient way of ensuring something is a numpy array, that is, a shortcut to ``numpy.asanyarray()``:
+As you can see from the above example, you can create numpy arrays by subscripting the ``np`` module. Since most people would have numpy imported as ``np`` anyway, this requires no additional names to clutter the namespace. Also, the syntax ``np[1,2,3]`` resembles the syntax for ``bytes`` literals, ``b"asd"``.
+
+The above also shows how you can use ``np.m`` and colons to easily create matrices (NxM) or row vectors (1xM).
+
+The `np` package also provides a convenient way of ensuring something is a numpy array, that is, a shortcut to ``numpy.asarray()``:
 
 .. code-block:: python
 
@@ -67,6 +92,7 @@ The `np` package also provides a convenient way of ensuring something is a numpy
     [1, 3, 5, 7, 9, 11]
     >>> np(mylist) + [7, 9, 11]
     array([8, 12, 16])
+
 
 As an experimental feature, there are also shortcuts for giving the arrays a specific data type (numpy dtype):
 

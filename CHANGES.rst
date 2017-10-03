@@ -1,11 +1,32 @@
 Changelog
 =========
 
+1.0.0 (2017)
+------------
+
+- Creating matrices is now even simpler::
+ 
+    np.m[1, 2: 3, 4] == np.array([[1, 2], [3, 4]])
+
+    np.m[1, 2:
+        :3, 4] == np.array([[1, 2], [3, 4]])
+
+    np.m[1, 2] == np.array([[1, 2]])
+
+    np.m[1, 2].T == np.array([[1],
+                              [2]])
+
+
+- ``np(...)`` corresponds to ``np.asarray(...)``
+- Many improvements to error handling
+- Some more cleanups to type shortcuts
+
 0.2.0 (2016-03-29)
 ------------------
 
-- Quick types are now np.i, np.f, np.u, np.c, or with the number of /bytes/ per
-  value appended: np.i4 -> int32, np.u2 -> uint16, np.c16 -> complex128, ...
+- Quick types are now ``np.i``, ``np.f``, ``np.u``, ``np.c``, or with the 
+  number of *bytes* per value appended: 
+  ``np.i4`` -> int32, ``np.u2`` -> uint16, ``np.c16`` -> complex128, ...
   (still somewhat experimental)
 - Removed the old np.i8 and np.ui8 which represented 8-bit types, which
   was inconsistent with short numpy dtype names which correspond to numbers of
