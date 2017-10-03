@@ -3,7 +3,7 @@ np -- create numpy arrays as ``np[1,3,5]``, and more
 
 ``np``  = ``numpy`` + handy tools
 
-It's very easy::
+* It's very easy::
 
     import np
 
