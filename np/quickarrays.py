@@ -50,8 +50,12 @@ def all_scalar(objs):
     return all(isscalar(obj) for obj in objs)
 
 def all_equal_len(objs):
-    lengths = [len(obj) for obj in objs]
-    return len(set(lengths)) <= 1
+    length = CheckEqual()
+    for obj in objs:
+        l = len(obj) # potentially raises TypeError
+        if not length.new(l):
+            return False
+    return True
 
 def all_equal_shape(objs):
     return len(set(shape(obj) for obj in objs)) <= 1
@@ -59,10 +63,14 @@ def all_equal_shape(objs):
 def shape_ok(objs):
     if all_scalar(objs):
         return True
-    if not all_equal_shape(objs):
+    try:
+        if not all_equal_len(objs):
+            return False
+        flat = [obj for cont in objs
+                        for obj in cont]
+    except TypeError: # len or iter failed
         return False
-    return shape_ok([obj for cont in objs
-                             for obj in cont])
+    return shape_ok(flat)
 
 def getitem_process(arg):
     if not isinstance(arg, tuple):
@@ -70,7 +78,9 @@ def getitem_process(arg):
         # multiple arguments to subscript [arg1, ...].
         arg = (arg,)
     if any(type(obj) is tuple for obj in arg):
-        raise TypeError("use np.m or lists [...] instead of tuples (...)")
+        raise TypeError("use arrays or lists [...] instead of tuples (...)")
+    if any(type(obj) is slice for obj in arg):
+        raise SyntaxError("misplaced colon; for a matrix, use np.m[1, 2: 3, 4]")
     if not shape_ok(arg):
         raise SyntaxError("cannot construct n-dimensional array")
     return arg
