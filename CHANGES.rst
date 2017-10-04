@@ -1,7 +1,7 @@
 Changelog
 =========
 
-1.0.0 (2017)
+1.0.0 (2017-09-20)
 ------------
 
 - Creating matrices is now even simpler::
