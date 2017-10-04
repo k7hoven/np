@@ -6,6 +6,7 @@ Created on Wed Feb 24 19:49:23 2016
 """
 
 import unittest
+import unittest.mock
 import np
 import sys
 
@@ -37,6 +38,24 @@ class QuickSubscriptArray(NPTestCase):
         self.assertIdenticalArray(np[[[ 0,  1], [ 2,  3], [ 4,  5]],
                                      [[ 6,  7], [ 8,  9], [10, 11]]],
                                   np.array(a3d))
+
+class QuickSubscriptMatrix(NPTestCase):
+    def test_row(self):
+        self.assertIdenticalArray(np.m[1,2,3], np.array([[1,2,3]]))
+
+    def test_matrix_singlecolon(self):
+        self.assertIdenticalArray(np.m[1,2 : 3,4 : 5,6], np.array([[1,2],[3,4],[5,6]]))
+    
+    def test_matrix_doublecolon(self):
+        self.assertIdenticalArray(np.m[1,2:
+                                      :3,4:
+                                      :5,6], np.array([[1,2],[3,4],[5,6]]))
+
+    def test_mixed_values(self):
+        self.assertIdenticalArray(np.m[1,2.3:4,5.6], np.array([[1,2.3],[4,5.6]]))
+    
+    def test_float_values(self):
+        self.assertIdenticalArray(np.m[1.0, 2.0: 3.0, 4.0], np.array([[1.0, 2.0],[3.0,4.0]]))
     
 class QuickArray(NPTestCase):
     def test_0D(self):
@@ -64,7 +83,14 @@ def for_dtype_shortcuts(test_method):
         for shortcut, dtype in np.np_quick_types.items():
             test_method(self, getattr(np, shortcut), dtype)
     return test_for_all_shortcuts
-    
+
+
+def for_dtype_matrix_shortcuts(test_method):
+    def test_for_all_shortcuts(self):
+        for shortcut, dtype in np.np_quick_types.items():
+            test_method(self, getattr(np.m, shortcut), dtype)
+    return test_for_all_shortcuts
+
 class QuickTypeSubscriptArray(NPTestCase):
     
     @for_dtype_shortcuts
@@ -92,7 +118,30 @@ class QuickTypeSubscriptArray(NPTestCase):
                                      [[ 6,  7], [ 8,  9], [10, 11]]],
                                   np.array(a3d, dtype=dtype))
 
+@unittest.skip("Skipping dtyped subscript matrices (not yet implemented)")    
+class QuickTypeSubscriptMatrix(NPTestCase):
+    @for_dtype_matrix_shortcuts
+    def test_row(self, sc, dtype):
+        self.assertIdenticalArray(sc[1,2,3], np.array([[1,2,3]], dtype=dtype))
 
+    @for_dtype_matrix_shortcuts
+    def test_matrix_singlecolon(self, sc, dtype):
+        self.assertIdenticalArray(sc[1,2 : 3,4 : 5,6], np.array([[1,2],[3,4],[5,6]], dtype=dtype))
+    
+    @for_dtype_matrix_shortcuts
+    def test_matrix_doublecolon(self, sc, dtype):
+        self.assertIdenticalArray(sc[1,2:
+                                    :3,4:
+                                    :5,6], np.array([[1,2],[3,4],[5,6]], dtype=dtype))
+
+    @for_dtype_matrix_shortcuts
+    def test_mixed_values(self, sc, dtype):
+        self.assertIdenticalArray(sc[1,2.3:4,5.6], np.array([[1,2.3],[4,5.6]], dtype=dtype))
+    
+    @for_dtype_matrix_shortcuts
+    def test_float_values(self, sc, dtype):
+        self.assertIdenticalArray(sc[1.0, 2.0: 3.0, 4.0], np.array([[1.0, 2.0],[3.0,4.0]], dtype=dtype))
+       
 class QuickTypeArray(NPTestCase):
     @for_dtype_shortcuts
     def test_0D(self, sc, dtype):
