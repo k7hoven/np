@@ -3,17 +3,23 @@ np -- create numpy arrays as ``np[1,3,5]``, and more
 
 ``np``  = ``numpy`` + handy tools
 
-It's easy: start by importing np (the alias for numpy)::
+It's easy: start by importing ``np`` (the alias for numpy):
+
+.. code-block:: python
 
     import np
 
 
-Create a 1-D array:: 
+Create a 1-D array: 
   
+.. code-block:: python
+
     np[1, 3, 5]
 
 
-Create a 2-D matrix:: 
+Create a 2-D matrix:
+
+.. code-block:: python
 
     np[1, 2, 3: 
       :4, 5, 6:
