@@ -21,9 +21,9 @@ Create a 2-D matrix:
 
 .. code-block:: python
 
-    np[1, 2, 3: 
-      :4, 5, 6:
-      :7, 8, 9]
+    np.m[1, 2, 3: 
+        :4, 5, 6:
+        :7, 8, 9]
 
 
 For the numerical Python package ``numpy`` itself, see http://www.numpy.org/.
